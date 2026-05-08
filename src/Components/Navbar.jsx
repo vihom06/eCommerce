@@ -1,25 +1,22 @@
 import React from 'react'
-import { GiHamburgerMenu } from "react-icons/gi";
 
 
 const Navbar = () => {
   return (
-    <header className="bg-black text-white">
-      <nav className="flex items-center justify-between p-7">
-
-        {/* Left side (logo + name) */}
-        <div className="flex items-center gap-12">
-          <img
-            src="/public/logo/eCommerceLogo.svg"
-            alt="Logo"
-            className="h-16 object-contain rounded-full"
-          />
-          <h1 className="font-bold text-3xl">Vendora</h1>
+    <header>
+      <nav>
+        {/* logo and name div */}
+        <div className='flex flex-row justify-around h-14 backdrop-blur-xs rounded-tl-2xl rounded-tr-2xl fixed top-0 left-0 w-full'>
+          <div className='flex flex-row gap-16 items-center'>
+            <img className='max-w-14' src="/eCommerceLogo.svg" alt="Logo" />
+            <p className='text-4xl font-semibold font-serif'>Vendora</p>
+          </div>
+          <div className='flex flex-row items-center gap-5 '>
+            <p>About</p>
+            <button className='border rounded-md p-1'>Login</button>
+            <button className='border rounded-md p-1'>Signup</button>
+          </div>
         </div>
-
-        {/* Right side (menu icon) */}
-        <GiHamburgerMenu className="text-2xl cursor-pointer" />
-
       </nav>
     </header>
   )
