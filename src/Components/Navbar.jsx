@@ -1,7 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
 const Navbar = () => {
+
+  const navigate = useNavigate()
+
+  const handleAbout = () => {
+    navigate('/About')
+  }
+
   return (
     <header>
       <nav>
@@ -12,7 +20,7 @@ const Navbar = () => {
             <p className='text-4xl font-semibold font-serif'>Vendora</p>
           </div>
           <div className='flex flex-row items-center gap-5 '>
-            <p>About</p>
+            <p onClick={handleAbout} className='cursor-pointer transition-all hover:-translate-y-1'>About</p>
             <button className='border rounded-md p-1'>Login</button>
             <button className='border rounded-md p-1'>Signup</button>
           </div>

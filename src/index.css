@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+@keyframes placeholderAnimation {
+
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  20% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.animate-placeholder {
+  animation: placeholderAnimation 2.5s ease-in-out infinite;
+}
