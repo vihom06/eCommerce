@@ -20,9 +20,9 @@ const Navbar = () => {
             <p className='text-4xl font-semibold font-serif'>Vendora</p>
           </div>
           <div className='flex flex-row items-center gap-5 '>
-            <p onClick={handleAbout} className='cursor-pointer transition-all hover:-translate-y-1'>About</p>
-            <button className='border rounded-md p-1 cursor-pointer'>Login</button>
-            <button className='border rounded-md p-1 cursor-pointer'>Signup</button>
+            <p onClick={handleAbout} className='hover:text-cyan-400 cursor-pointer transition-all hover:-translate-y-1 hover:outline-text'>About</p>
+            <button className='hover:bg-cyan-400 border rounded-md p-1 cursor-pointer'>Login</button>
+            <button className='hover:bg-cyan-400 border rounded-md p-1 cursor-pointer'>Signup</button>
           </div>
         </div>
       </nav>

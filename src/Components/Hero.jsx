@@ -29,8 +29,8 @@ const Hero = () => {
         <div className='flex flex-col text-7xl pt-10 gap-4'>
           <p>Find</p>
           <p>Your</p>
-          <p onClick={handleProduct} className='font-bold font-serif text-cyan-300 cursor-pointer'>Product</p>
-          <p onClick={handlePartner} className='font-bold font-serif text-cyan-300 cursor-pointer'>partner</p>
+          <p onClick={handleProduct} className='outline-text font-bold font-serif text-cyan-300 cursor-pointer'>Product</p>
+          <p onClick={handlePartner} className='outline-text font-bold font-serif text-cyan-300 cursor-pointer'>partner</p>
         </div>
         {/* right model section */}
         <div>

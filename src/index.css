@@ -26,3 +26,7 @@
 .animate-placeholder {
   animation: placeholderAnimation 2.5s ease-in-out infinite;
 }
+
+.outline-text{
+  -webkit-text-stroke: 1px black;
+}
