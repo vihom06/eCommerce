@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BsSearch } from "react-icons/bs";
-
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls, useGLTF } from '@react-three/drei'
+import Scene from '../three/Scene';
+import Keychain from './Models/Keychain';
+import SearchBar from './SearchBar';
 
 const Hero = () => {
 
@@ -15,38 +19,10 @@ const Hero = () => {
     navigate('/partners')
   }
 
-  const searchTexts = [
-    "Products",
-    "Partners",
-    "Factories"
-  ]
-
-  const [searchValue, setSearchValue] = useState('')
-
-  const [index, setIndex] = useState(0)
-
-  useEffect(() => {
-
-    const interval = setInterval(() => {
-
-      setIndex((prev) =>
-        (prev + 1) % searchTexts.length
-      )
-
-    }, 2500)
-
-    return () => clearInterval(interval)
-
-  }, [])
-
   return (
     <section className='pt-16 flex flex-col items-center'>
       {/* search bar */}
-      <form className='border w-[50%] flex flex-row justify-between rounded-xl px-4 py-2' >
-        <input className={`outline-none w-full bg-transparent ${!searchValue ? 'animate-placeholder' : ''}`} placeholder={`Search for ${searchTexts[index]}`} type="text" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
-        <button className='cursor-pointer'><BsSearch /></button>
-
-      </form>
+      <SearchBar />
       {/* left and right section */}
       <div className='flex flex-row pt-10'>
         {/* left text section */}
@@ -57,8 +33,21 @@ const Hero = () => {
           <p onClick={handlePartner} className='font-bold font-serif text-cyan-300 cursor-pointer'>partner</p>
         </div>
         {/* right model section */}
-        <div className='font-bold text-7xl'>
-          Render Model later
+        <div>
+
+          <Canvas camera={{ position: [0, 0, 5], fov: 100, near: 0.1, far: 500 }}>
+
+            <ambientLight intensity={6} />
+
+            <directionalLight
+              position={[5, 5, 5]}
+              intensity={3}
+            />
+
+            <Scene />
+
+
+          </Canvas>
         </div>
       </div>
     </section>

@@ -21,8 +21,8 @@ const Navbar = () => {
           </div>
           <div className='flex flex-row items-center gap-5 '>
             <p onClick={handleAbout} className='cursor-pointer transition-all hover:-translate-y-1'>About</p>
-            <button className='border rounded-md p-1'>Login</button>
-            <button className='border rounded-md p-1'>Signup</button>
+            <button className='border rounded-md p-1 cursor-pointer'>Login</button>
+            <button className='border rounded-md p-1 cursor-pointer'>Signup</button>
           </div>
         </div>
       </nav>
