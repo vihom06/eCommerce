@@ -14,6 +14,9 @@ import Products from './Pages/Products'
 import Partners from './Pages/Partners'
 import ProductDetails from './Pages/ProductDetails'
 import VendorProfile from './Pages/VendorProfile'
+import Login from './Pages/Login'
+import Signup from './Pages/Signup'
+import About from './Pages/About'
 
 const App = () => {
   return (
@@ -31,6 +34,10 @@ const App = () => {
             path="/"
             element={<Home />}
           />
+
+          {/* Auth */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
           {/* Products Page */}
           <Route
@@ -54,6 +61,23 @@ const App = () => {
           <Route
             path="/vendors/:id"
             element={<VendorProfile />}
+          />
+
+          {/* Login */}
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+
+          {/* Signup */}
+          <Route
+            path="/signup"
+            element={<Signup />}
+          />
+          
+          <Route
+            path="/about"
+            element={<About />}
           />
 
         </Routes>
