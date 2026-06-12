@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import errorHandler from "./middlewares/error.middleware.js";
 
 // creating express application
 const app = express();
@@ -21,6 +21,7 @@ app.use(cors({
     credentials: true
 }));
 
+app.use(errorHandler);
 
 // testing route
 app.get("/", (req, res) => {
