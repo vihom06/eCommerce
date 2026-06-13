@@ -1,35 +1,86 @@
+// package imports
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+
+
+// route imports
+import authRoutes from "./routes/auth.routes.js";
+
+
+// middleware imports
 import errorHandler from "./middlewares/error.middleware.js";
+
+
+
 
 // creating express application
 const app = express();
 
 
-// middlewares
-app.use(express.json());
 
-app.use(express.urlencoded({
-    extended: true
-}));
 
-app.use(cookieParser());
+// global middlewares
+app.use(
+    express.json()
+);
 
-app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true
-}));
 
-app.use(errorHandler);
+app.use(
+    express.urlencoded({
+        extended:true
+    })
+);
 
-// testing route
-app.get("/", (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: "eCommerce API is running"
+
+app.use(
+    cookieParser()
+);
+
+
+app.use(
+    cors({
+        origin:process.env.FRONTEND_URL,
+        credentials:true
+    })
+);
+
+
+
+
+// health check route
+app.get("/", (req,res)=>{
+
+    res
+    .status(200)
+    .json({
+
+        success:true,
+
+        message:"eCommerce API is running"
+
     });
+
 });
+
+
+
+
+// api routes
+app.use(
+    "/api/v1/auth",
+    authRoutes
+);
+
+
+
+
+// error handling middleware
+app.use(
+    errorHandler
+);
+
+
 
 
 // export app

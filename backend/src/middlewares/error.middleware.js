@@ -1,16 +1,21 @@
-const errorHandler = (err, req, res, next)=>{
+const asyncHandler = (requestHandler) => {
 
-    return res
-    .status(err.statusCode || 500)
-    .json({
+    return (req, res, next) => {
 
-        success:false,
-        message:err.message || "Internal Server Error",
-        errors:err.errors || []
+        Promise
+        .resolve(requestHandler(req, res, next))
+        .catch((error)=>{
 
-    })
+            console.log("REAL ERROR:");
+            console.log(error.stack);
+
+            next(error);
+
+        })
+
+    }
 
 }
 
 
-export default errorHandler;
+export default asyncHandler;
