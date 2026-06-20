@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 // route imports
 import authRoutes from "./routes/auth.routes.js";
 import profileRoutes from "./routes/profile.routes.js";
+import addressRoute from "./routes/address.routes.js"
 
 
 // middleware imports
@@ -71,6 +72,8 @@ app.get("/", (req,res)=>{
 app.use( "/api/v1/auth", authRoutes );
 
 app.use( "/api/v1/profile", profileRoutes );
+
+app.use( "/api/v1/address", addressRoute );
 
 
 
