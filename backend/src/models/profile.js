@@ -6,23 +6,47 @@ const profileSchema = new mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
-        required:true
+        required:true,
+        index:true
     },
 
 
     firstName:{
         type:String,
-        required:true
+        trim:true,
+        default: "",
     },
 
 
-    lastName:String,
+    lastName:{
+        type:String,
+        trim:true,
+        default: "",
+    },
 
 
-    phone:String,
+    phone:{
+        type:String,
+        default: "",
+    },
 
 
-    image:String,
+    gender:{
+        type:String,
+        default: "",
+    },
+
+
+    dateOfBirth:{
+        type:Date,
+        default: "",
+    },
+
+
+    image:{
+        type:String,
+        default: "",
+    },
 
 
     addresses:[
@@ -33,7 +57,8 @@ const profileSchema = new mongoose.Schema({
     ]
 
 
-},{timestamps:true})
+},{timestamps:true});
+
 
 
 export const Profile =

@@ -1,4 +1,5 @@
 import { User } from "../models/user.js";
+import { Profile } from "../models/profile.js";
 
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
@@ -6,7 +7,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 
 
 
-const registerUser = asyncHandler(async(req,res)=>{
+const registerUser = asyncHandler(async (req, res) => {
 
 
     // get data
@@ -19,7 +20,7 @@ const registerUser = asyncHandler(async(req,res)=>{
 
 
     // validation
-    if(!email || !password){
+    if (!email || !password) {
 
         throw new ApiError(
             400,
@@ -36,7 +37,7 @@ const registerUser = asyncHandler(async(req,res)=>{
     });
 
 
-    if(existingUser){
+    if (existingUser) {
 
         throw new ApiError(
             409,
@@ -53,41 +54,55 @@ const registerUser = asyncHandler(async(req,res)=>{
 
         email,
         password,
-        role
+        role,
 
     });
 
 
 
+    //create empty profile and connect with the user
+    const profile = await Profile.create({
+        user: user._id,
+    })
+    user.profile = profile._id
+    await user.save({
+        validateBeforeSave: false
+    });
+
+
+
+
     // remove password
     const createdUser = await User
-    .findById(user._id)
-    .select(
-        "-password -refreshToken -__v"
-    );
+        .findById(user._id)
+        .select(
+            "-password -refreshToken -__v"
+        )
+        .populate("profile");
 
 
+        
 
     // response
     return res
-    .status(201)
-    .json(
+        .status(201)
+        .json(
 
-        new ApiResponse(
-            201,
-            createdUser,
-            "User registered successfully"
-        )
+            new ApiResponse(
+                201,
+                createdUser,
+                "User registered successfully"
+            )
 
-    );
+        );
 
 
 });
 
 
- 
 
-const loginUser = asyncHandler(async(req,res)=>{
+
+const loginUser = asyncHandler(async (req, res) => {
 
 
     // get data
@@ -99,7 +114,7 @@ const loginUser = asyncHandler(async(req,res)=>{
 
 
     // validation
-    if(!email || !password){
+    if (!email || !password) {
 
         throw new ApiError(
             400,
@@ -117,7 +132,7 @@ const loginUser = asyncHandler(async(req,res)=>{
 
 
 
-    if(!user){
+    if (!user) {
 
         throw new ApiError(
             404,
@@ -131,11 +146,11 @@ const loginUser = asyncHandler(async(req,res)=>{
 
     // check password
     const isPasswordValid =
-    await user.isPasswordCorrect(password);
+        await user.isPasswordCorrect(password);
 
 
 
-    if(!isPasswordValid){
+    if (!isPasswordValid) {
 
         throw new ApiError(
             401,
@@ -149,11 +164,11 @@ const loginUser = asyncHandler(async(req,res)=>{
 
     // create tokens
     const accessToken =
-    user.generateAccessToken();
+        user.generateAccessToken();
 
 
     const refreshToken =
-    user.generateRefreshToken();
+        user.generateRefreshToken();
 
 
 
@@ -163,7 +178,7 @@ const loginUser = asyncHandler(async(req,res)=>{
 
 
     await user.save({
-        validateBeforeSave:false
+        validateBeforeSave: false
     });
 
 
@@ -171,10 +186,10 @@ const loginUser = asyncHandler(async(req,res)=>{
 
     // remove sensitive fields
     const loggedInUser = await User
-    .findById(user._id)
-    .select(
-        "-password -refreshToken -__v"
-    );
+        .findById(user._id)
+        .select(
+            "-password -refreshToken -__v"
+        );
 
 
 
@@ -182,9 +197,9 @@ const loginUser = asyncHandler(async(req,res)=>{
     // cookie options
     const options = {
 
-        httpOnly:true,
+        httpOnly: true,
 
-        secure:true
+        secure: true
 
     };
 
@@ -193,36 +208,36 @@ const loginUser = asyncHandler(async(req,res)=>{
 
 
     return res
-    .status(200)
-    .cookie(
-        "accessToken",
-        accessToken,
-        options
-    )
-    .cookie(
-        "refreshToken",
-        refreshToken,
-        options
-    )
-    .json(
-
-        new ApiResponse(
-
-            200,
-
-            {
-                user:loggedInUser,
-
-                accessToken,
-
-                refreshToken
-            },
-
-            "User logged in successfully"
-
+        .status(200)
+        .cookie(
+            "accessToken",
+            accessToken,
+            options
         )
+        .cookie(
+            "refreshToken",
+            refreshToken,
+            options
+        )
+        .json(
 
-    );
+            new ApiResponse(
+
+                200,
+
+                {
+                    user: loggedInUser,
+
+                    accessToken,
+
+                    refreshToken
+                },
+
+                "User logged in successfully"
+
+            )
+
+        );
 
 
 });
@@ -230,14 +245,14 @@ const loginUser = asyncHandler(async(req,res)=>{
 
 
 
-const logoutUser = asyncHandler(async(req,res)=>{
+const logoutUser = asyncHandler(async (req, res) => {
 
 
     // get refresh token
     const refreshToken = req.cookies?.refreshToken;
 
 
-    if(!refreshToken){
+    if (!refreshToken) {
 
         throw new ApiError(
             401,
@@ -255,7 +270,7 @@ const logoutUser = asyncHandler(async(req,res)=>{
 
 
 
-    if(!user){
+    if (!user) {
 
         throw new ApiError(
             401,
@@ -271,7 +286,7 @@ const logoutUser = asyncHandler(async(req,res)=>{
 
 
     await user.save({
-        validateBeforeSave:false
+        validateBeforeSave: false
     });
 
 
@@ -279,37 +294,37 @@ const logoutUser = asyncHandler(async(req,res)=>{
     // cookie options
     const options = {
 
-        httpOnly:true,
+        httpOnly: true,
 
-        secure:true
+        secure: true
 
     };
 
 
 
     return res
-    .status(200)
-    .clearCookie(
-        "accessToken",
-        options
-    )
-    .clearCookie(
-        "refreshToken",
-        options
-    )
-    .json(
-
-        new ApiResponse(
-
-            200,
-
-            {},
-
-            "User logged out successfully"
-
+        .status(200)
+        .clearCookie(
+            "accessToken",
+            options
         )
+        .clearCookie(
+            "refreshToken",
+            options
+        )
+        .json(
 
-    );
+            new ApiResponse(
+
+                200,
+
+                {},
+
+                "User logged out successfully"
+
+            )
+
+        );
 
 
 });

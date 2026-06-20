@@ -1,21 +1,24 @@
-const asyncHandler = (requestHandler) => {
+const errorHandler = (err, req, res, next) => {
 
-    return (req, res, next) => {
+    // Default error values
+    let statusCode = err.statusCode || 500;
+    let message = err.message || "Internal Server Error";
 
-        Promise
-        .resolve(requestHandler(req, res, next))
-        .catch((error)=>{
+    // Log error details
+    console.log("ERROR CAUGHT BY MIDDLEWARE:");
+    console.log(err.stack);
 
-            console.log("REAL ERROR:");
-            console.log(error.stack);
-
-            next(error);
-
-        })
-
-    }
+    // Send error response
+    return res
+    .status(statusCode)
+    .json({
+        success: false,
+        statusCode: statusCode,
+        message: message,
+        ...(process.env.NODE_ENV === "development" && { stack: err.stack })
+    });
 
 }
 
 
-export default asyncHandler;
+export default errorHandler;
