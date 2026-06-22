@@ -2,38 +2,52 @@ const sellerSchema = new mongoose.Schema({
 
 
 user:{
-type:mongoose.Schema.Types.ObjectId,
-ref:"User"
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User",
+    required:true,
+    unique:true
 },
 
 
 companyName:{
-type:String,
-required:true
+    type:String,
+    required:true,
+    trim:true
 },
 
 
-description:String,
+description:{
+    type:String,
+    trim:true
+},
 
 
-GSTNumber:String,
+GSTNumber:{
+    type:String,
+    required:true,
+    unique:true,
+    trim:true
+},
 
 
 businessAddress:{
-type:mongoose.Schema.Types.ObjectId,
-ref:"Address"
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"Address",
+    required:true
 },
 
 
 approved:{
-type:Boolean,
-default:false
+    type:Boolean,
+    default:false
 },
 
 
 rating:{
-type:Number,
-default:0
+    type:Number,
+    default:0,
+    min:0,
+    max:5
 }
 
 
