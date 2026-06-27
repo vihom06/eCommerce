@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import profileRoutes from "./routes/profile.routes.js";
 import addressRoute from "./routes/address.routes.js"
+import sellerRoute from "./routes/seller.routes.js"
+import adminRoute from "./routes/admin.routes.js"
 
 
 // middleware imports
@@ -74,6 +76,10 @@ app.use( "/api/v1/auth", authRoutes );
 app.use( "/api/v1/profile", profileRoutes );
 
 app.use( "/api/v1/address", addressRoute );
+
+app.use( "/api/v1/seller",  sellerRoute );
+
+app.use( "/api/v1/admin",  adminRoute );
 
 
 

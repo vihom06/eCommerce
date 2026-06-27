@@ -12,9 +12,7 @@ const router = express.Router();
 
 
 
-router
-  .route("/update_profile")
-  .put(
+router.route("/update_profile").put(
     verifyJWT,
     updateProfile
   );
