@@ -58,7 +58,7 @@ const getAllUsersForAdmin = asyncHandler(async (req, res) => {
         new ApiResponse(
             200,
             {
-                totalUsers, 
+                totalUsers,
                 users
             },
             "Users fetched successfully"
@@ -77,7 +77,10 @@ const getSellerDetailsForAdmin = asyncHandler(async (req, res) => {
             path: "user",
             select: "-password -refreshToken",
             populate: {
-                path: "profile"
+                path: "profile",
+                populate: {
+                    path: "addresses"
+                }
             }
         })
         .populate("businessAddress");
@@ -113,4 +116,4 @@ const getSellerDetailsForAdmin = asyncHandler(async (req, res) => {
 
 
 
-export { getAllSellersForAdmin, getAllUsersForAdmin,  getSellerDetailsForAdmin};  
+export { getAllSellersForAdmin, getAllUsersForAdmin, getSellerDetailsForAdmin };  

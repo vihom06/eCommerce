@@ -1,4 +1,5 @@
 import express from "express";
+import { verifyJWT, authorizeRoles } from "../middlewares/auth.middleware.js";
 
 import { getAllSellersForAdmin, getAllUsersForAdmin,  getSellerDetailsForAdmin } from "../controllers/admin.controller.js";
 
@@ -17,7 +18,7 @@ router.route("/get_users_for_admin").get(
     getAllUsersForAdmin
 );
 
-router.route("/get_seller_details_for_admin").get(
+router.route("/get_seller_details_for_admin/:sellerId").get(
     verifyJWT,
     authorizeRoles("Admin"),
     getSellerDetailsForAdmin
