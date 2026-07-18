@@ -17,41 +17,41 @@ import {
 
 const router = express.Router();
 
-router.route("/").post(
+router.route("/create_product").post(
     verifyJWT,
     authorizeRoles("Seller"),
     createProduct
 );
 
-router.route("/:productId").put(
+router.route("/update_product/:productId").put(
     verifyJWT,
     authorizeRoles("Seller"),
     updateProduct
 );
 
-router.route("/:productId").delete(
+router.route("/delete_product/:productId").delete(
     verifyJWT,
     authorizeRoles("Seller"),
     deleteProduct
 );
 
-router.route("/my-products").get(
+router.route("/my_products").get(
     verifyJWT,
     authorizeRoles("Seller"),
     getMyProducts
 );
 
-router.route("/my-products/:productId").get(
+router.route("/my_product/:productId").get(
     verifyJWT,
     authorizeRoles("Seller"),
     getMyProduct
 );
 
-router.route("/").get(
+router.route("/all_products").get(
     getAllProducts
 );
 
-router.route("/:productId").get(
+router.route("/get_product/:productId").get(
     getProduct
 );
 
