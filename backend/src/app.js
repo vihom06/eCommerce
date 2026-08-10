@@ -13,6 +13,8 @@ import adminRoute from "./routes/admin.routes.js"
 import productRoute from "./routes/product.routes.js";
 import categoryRoute from "./routes/category.routes.js";
 import cartRoute from "./routes/cart.routes.js";
+import paymentRouter from "./routes/payment.routes.js";
+import orderRouter from "./routes/order.routes.js";
 
 
 
@@ -36,7 +38,7 @@ app.use(
 
 app.use(
     express.urlencoded({
-        extended:true
+        extended: true
     })
 );
 
@@ -48,8 +50,8 @@ app.use(
 
 app.use(
     cors({
-        origin:process.env.FRONTEND_URL,
-        credentials:true
+        origin: process.env.FRONTEND_URL,
+        credentials: true
     })
 );
 
@@ -57,17 +59,17 @@ app.use(
 
 
 // health check route
-app.get("/", (req,res)=>{
+app.get("/", (req, res) => {
 
     res
-    .status(200)
-    .json({
+        .status(200)
+        .json({
 
-        success:true,
+            success: true,
 
-        message:"eCommerce API is running"
+            message: "eCommerce API is running"
 
-    });
+        });
 
 });
 
@@ -75,21 +77,26 @@ app.get("/", (req,res)=>{
 
 
 // api routes
-app.use( "/api/v1/auth", authRoutes );
+app.use("/api/v1/auth", authRoutes);
 
-app.use( "/api/v1/profile", profileRoutes );
+app.use("/api/v1/profile", profileRoutes);
 
-app.use( "/api/v1/address", addressRoute );
+app.use("/api/v1/address", addressRoute);
 
-app.use( "/api/v1/seller",  sellerRoute );
+app.use("/api/v1/seller", sellerRoute);
 
-app.use( "/api/v1/admin",  adminRoute );
+app.use("/api/v1/admin", adminRoute);
 
 app.use("/api/v1/product", productRoute);
 
 app.use("/api/v1/category", categoryRoute);
 
 app.use("/api/v1/cart", cartRoute);
+
+app.use("/api/v1/payment", paymentRouter);
+
+app.use("/api/v1/order", orderRouter);
+
 
 
 
